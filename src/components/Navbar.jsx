@@ -1,37 +1,36 @@
-import { Rocket, User, FileDown } from 'lucide-react';
 import React from 'react';
+import { FileDown, User } from 'lucide-react';
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/30 bg-black/10 border-b border-white/10">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-indigo-500 to-fuchsia-500 text-white">
-            <Rocket size={18} />
-          </span>
-          <span className="font-semibold tracking-tight">Naman Sinha</span>
-        </a>
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          <a href="#about" className="text-white/70 hover:text-white transition-colors">About</a>
-          <a href="#experience" className="text-white/70 hover:text-white transition-colors">Experience</a>
-          <a href="#skills" className="text-white/70 hover:text-white transition-colors">Skills</a>
-          <a href="#projects" className="text-white/70 hover:text-white transition-colors">Projects</a>
-          <a href="#contact" className="text-white/70 hover:text-white transition-colors">Contact</a>
-        </nav>
+    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/5 bg-white/0 border-b border-white/10">
+      <nav className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <a href="#home" className="font-semibold tracking-tight text-white hover:text-white/90">Naman Sinha</a>
+
+        <div className="hidden md:flex items-center gap-6 text-sm text-white/80">
+          <a href="#home" className="hover:text-white">Home</a>
+          <a href="#about" className="hover:text-white">About</a>
+          <a href="#experience" className="hover:text-white">Experience</a>
+          <a href="#skills" className="hover:text-white">Skills</a>
+          <a href="#projects" className="hover:text-white">Projects</a>
+          <a href="#contact" className="hover:text-white">Contact</a>
+        </div>
+
         <div className="flex items-center gap-2">
           <a
-            href="https://drive.google.com/file/d/1WbnSUS8kpuVoXtuEG6fq1DKRsDhsuPsX/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-2 text-sm font-medium px-3 py-2 rounded-md bg-white/10 hover:bg-white/15 text-white border border-white/10 transition-colors"
+            href="https://drive.google.com/uc?export=download&id=1WbnSUS8kpuVoXtuEG6fq1DKRsDhsuPsX"
+            className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-white/15"
           >
-            <FileDown size={16} /> Resume
+            <FileDown className="h-4 w-4" /> Resume
           </a>
-          <a href="#contact" className="inline-flex items-center gap-2 text-sm font-medium px-3 py-2 rounded-md bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-cyan-400 text-white transition-colors">
-            <User size={16} /> Hire Me
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 rounded-md bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-400 px-3 py-1.5 text-sm font-medium text-white shadow shadow-fuchsia-500/20"
+          >
+            <User className="h-4 w-4" /> Hire Me
           </a>
         </div>
-      </div>
+      </nav>
     </header>
   );
 }

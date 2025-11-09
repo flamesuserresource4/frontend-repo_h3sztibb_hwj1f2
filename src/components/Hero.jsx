@@ -1,9 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Spline from '@splinetool/react-spline';
 
 export default function Hero() {
   const sectionRef = useRef(null);
 
+  // Remove any grain/pointer visuals and keep a clean, interactive scene
   const handleMouseMove = (e) => {
     const el = sectionRef.current;
     if (!el) return;
@@ -14,16 +15,25 @@ export default function Hero() {
     el.style.setProperty('--my', `${y}px`);
   };
 
+  // Ensure CSS vars are initialized for first paint
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (el) {
+      el.style.setProperty('--mx', '50%');
+      el.style.setProperty('--my', '40%');
+    }
+  }, []);
+
   return (
     <section
       id="home"
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="relative min-h-[90vh] w-full overflow-hidden text-white bg-black"
+      className="relative min-h-[90vh] w-full overflow-hidden text-white"
       style={{
-        // Cursor-reactive moving gradient (no grain)
+        // Smooth, cursor-reactive light bloom with no grain
         background:
-          'radial-gradient(600px circle at var(--mx,50%) var(--my,40%), rgba(139, 92, 246, 0.22), transparent 40%), radial-gradient(1200px circle at 50% 0%, rgba(59, 130, 246, 0.12), transparent 55%)',
+          'radial-gradient(800px circle at var(--mx,50%) var(--my,40%), rgba(147, 51, 234, 0.18), transparent 45%), radial-gradient(1300px circle at 50% 0%, rgba(59, 130, 246, 0.12), transparent 55%)',
       }}
     >
       <div className="absolute inset-0">
