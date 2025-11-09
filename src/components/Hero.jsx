@@ -1,73 +1,65 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import Spline from '@splinetool/react-spline';
 
 export default function Hero() {
-  const sectionRef = useRef(null);
-
-  // Remove any grain/pointer visuals and keep a clean, interactive scene
-  const handleMouseMove = (e) => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    el.style.setProperty('--mx', `${x}px`);
-    el.style.setProperty('--my', `${y}px`);
-  };
-
-  // Ensure CSS vars are initialized for first paint
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (el) {
-      el.style.setProperty('--mx', '50%');
-      el.style.setProperty('--my', '40%');
-    }
-  }, []);
-
   return (
-    <section
-      id="home"
-      ref={sectionRef}
-      onMouseMove={handleMouseMove}
-      className="relative min-h-[90vh] w-full overflow-hidden text-white"
-      style={{
-        // Smooth, cursor-reactive light bloom with no grain
-        background:
-          'radial-gradient(800px circle at var(--mx,50%) var(--my,40%), rgba(147, 51, 234, 0.18), transparent 45%), radial-gradient(1300px circle at 50% 0%, rgba(59, 130, 246, 0.12), transparent 55%)',
-      }}
-    >
+    <section id="home" className="relative h-[80vh] md:h-[90vh] w-full">
+      {/* Spline canvas fills the section */}
       <div className="absolute inset-0">
-        <Spline scene="https://prod.spline.design/wwTRdG1D9CkNs368/scene.splinecode" style={{ width: '100%', height: '100%' }} />
+        <Spline
+          scene="https://prod.spline.design/6mQsk3Ph4Z1xvV9C/scene.splinecode"
+          style={{ width: '100%', height: '100%' }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-24 pb-32">
-        <div className="max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs uppercase tracking-wider text-white/80 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 animate-pulse" />
-            UI/UX Designer & Frontend Developer
-          </span>
-          <h1 className="mt-6 text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-            Naman Sinha
-          </h1>
-          <p className="mt-4 text-white/85 text-lg">
-            I’m an aspiring Frontend and Android App Developer passionate about turning creative ideas into sleek, interactive digital experiences. Curious by nature, I explore new tools and technologies to push the boundaries of design and code. I love crafting intuitive interfaces and building impactful products that solve real-world problems.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href="#projects"
-              className="inline-flex items-center justify-center rounded-md bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-cyan-400 px-5 py-3 font-semibold text-white shadow-lg shadow-fuchsia-500/20 hover:brightness-110 transition"
-            >
-              View Projects
-            </a>
-            <a
-              href="#about"
-              className="inline-flex items-center justify-center rounded-md border border-white/20 bg-white/10 px-5 py-3 font-medium text-white/90 hover:bg-white/15 transition"
-            >
-              About Me
-            </a>
+      {/* Overlays are pointer-events-none so Spline remains interactive */}
+      <div className="pointer-events-none relative z-10 flex h-full w-full items-center">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="max-w-2xl">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white">
+              Naman Sinha
+            </h1>
+            <p className="mt-4 text-lg md:text-xl text-white/80">
+              Creative developer crafting immersive, performant web experiences.
+            </p>
+            <div className="mt-8 flex gap-3">
+              <a href="#projects" className="pointer-events-auto rounded-full bg-white/10 px-5 py-2.5 text-white hover:bg-white/20 transition">View Work</a>
+              <a href="#contact" className="pointer-events-auto rounded-full bg-violet-500/90 px-5 py-2.5 text-white hover:bg-violet-500 transition">Contact</a>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Subtle cursor-reactive spotlight */}
+      <Spotlight />
     </section>
+  );
+}
+
+function Spotlight() {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onMove = (e) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      el.style.setProperty('--mx', `${x}%`);
+      el.style.setProperty('--my', `${y}%`);
+    };
+    window.addEventListener('pointermove', onMove);
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      aria-hidden
+      className="pointer-events-none absolute inset-0"
+      style={{
+        background:
+          'radial-gradient(600px 600px at var(--mx, 50%) var(--my, 40%), rgba(124,58,237,0.18), transparent 60%),\n           radial-gradient(800px 800px at var(--mx, 50%) calc(var(--my, 40%) + 8%), rgba(59,130,246,0.12), transparent 60%)',
+      }}
+    />
   );
 }
